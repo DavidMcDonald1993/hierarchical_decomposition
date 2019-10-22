@@ -1,9 +1,16 @@
+import os
+
 import numpy as np 
 import networkx as nx
+import pandas as pd
+
+import itertools
 
 import PyBoolNet
 from PyBoolNet import Attractors
 from PyBoolNet import StateTransitionGraphs as STGs
+
+import matplotlib.pyplot as plt
 
 def build_STG_and_determine_attractors(primes, states):
 
@@ -50,56 +57,97 @@ def build_STG_and_determine_attractors(primes, states):
             # print ("found cyclic attractor with period", len(attractor))
             attractors.append(attractor)
 
-        if i % 1000 == 0:
-            print ("processed state", i, "/", len(states))
+        # if i % 1000 == 0:
+        #     print ("processed state {:04d}/{}".format(i, len(states)))
 
 
     return attractors, stg
+
+def compute_average_activation(primes, genes, attractors):
+
+    counts = {gene: [] for gene in genes}
+
+    for attractor in attractors:
+
+        attractor_counts = {gene: 0 for gene in genes}
+
+        for state in attractor:
+
+            state_dict = STGs.state2dict(primes, state)
+
+            for gene in genes:
+                attractor_counts[gene] += state_dict[gene]
+
+        # attractor_counts = {gene: count/len(attractor) for gene, count in attractor_counts.items()}
+        for gene in genes:
+            counts[gene].append(attractor_counts[gene] / len(attractor))
+
+    # return {gene: count/len(attractors) for gene, count in counts.items()}
+    return counts
+
+
+def plot_results_df(df, filename):
+
+    num_genes = df.shape[1]
+
+    ind = np.arange(num_genes)  * 10# the x locations for the groups
+    width = 1  # the width of the bars
+
+    fig, ax = plt.subplots(figsize=[10,10])
+
+    for i, col in enumerate(df.columns):
+        data = df[col]
+        
+        x = ind + (-num_genes//2 + i) * width
+
+        print (x, )
+        print (data)
+        print (width)
+        ax.bar(x, data, width, label=col)
+        
+    # Add some text for labels, title and custom x-axis tick labels, etc.
+    ax.set_ylabel('Difference in activation from original network')
+    ax.set_title('Test1')
+    ax.set_xticks(ind)
+    ax.set_xticklabels(df.index)
+    ax.legend()
+
+    plt.savefig(filename)
+
+    plt.show()
 
 
 def main():
 
     update = "synchronous"
 
-    # primes = PyBoolNet.FileExchange.bnet2primes("datasets/EGFR_full/egfr.bnet", FnamePRIMES="datasets/EGFR_full/egfr_primes.json")
+    # primes = PyBoolNet.FileExchange.bnet2primes("datasets/EGFR_full/egfr.bnet", 
+        # FnamePRIMES="datasets/EGFR_full/egfr_primes.json")
     primes = PyBoolNet.FileExchange.read_primes("datasets/EGFR_full/egfr_primes.json")
-
-
-
-
-
-    # primes = PyBoolNet.FileExchange.bnet2primes("synthetic_bow_tie_networks/000/network.bnet")
-
-    # stg = STGs.primes2stg(primes, update)
-
-
-    # states = list(stg.nodes())
-
-    # print (len(states))
-
-
-    # attractors, stg_computed = build_STG_and_determine_attractors(primes, states)
-
-
-    # for attractor in set(map(frozenset, attractors)):
-    #     print (attractor)
-
-    # raise SystemExit
-
 
     core_of_the_core = set(["pi3k", "pip3", "gab1"])
 
-    for gene in core_of_the_core:
-        assert gene in primes
+    proliferation_grow_tfs = set(["elk1", "creb", "ap1", "cmyc", 
+        "p70s6_2", "hsp27"])
+    apoptosis_tfs = set(["pro_apoptotic"])
+    # additional_genes_of_interest = set(["akt", "ras"])
+
+    input_genes = set(PyBoolNet.PrimeImplicants.find_inputs(primes))
+    output_genes = proliferation_grow_tfs.union(apoptosis_tfs)
+
+    for gene in output_genes:
+        assert gene in primes, gene
+
+    potential_targets = set(primes) - input_genes - output_genes - core_of_the_core - {"erbb1", "ras"}
 
     cancer_network =  PyBoolNet.PrimeImplicants.\
         create_constants(primes, 
-        {"erbb1": 1}, 
+        {"erbb1": 1, "ras": 1}, 
         Copy=True)
 
     num_state_samples = 10000
 
-    print ("state space is too large --  sampling", 
+    print ("state space is too large -- sampling", 
             num_state_samples, 
             "states")
     states = set()
@@ -111,23 +159,124 @@ def main():
 
     print ("completed sampling states -- determining attractors")
 
-    # attrs = []
-
-    # for i, state in enumerate(states):
-
-    #     attrs.append(STGs.state2str(Attractors.find_attractor_state_by_randomwalk_and_ctl(cancer_network, 
-    #     update, 
-    #     InitialState=state) ))
-    #     if i % 1 == 0:
-    #         print ("done", i ,"/", num_state_samples)
-
-    attractors, stg = build_STG_and_determine_attractors(cancer_network, states)
+    attractors, _ = build_STG_and_determine_attractors(cancer_network, states)
     
-    print ("done", len(stg))
+    print ("ORIGINAL NETWORK")
 
-    print ("found", len(set(map(frozenset, attractors))), "unique attractors")
+    print ("found", len(set(map(frozenset, attractors))), 
+        "unique attractors")
+
+    gene_counts_original = compute_average_activation(cancer_network, 
+        genes=output_genes,
+        attractors=attractors)
+
+    # for k, v in gene_counts_original.items():
+    #     # print ("{}\t{}".format(k, v))
+    #     plt.hist(v)
+    #     plt.title(k)
+    #     plt.show()
+
+    # print ()
+    # raise SystemExit
+
+    # ## build dataframe
+    # raw_value_df = pd.DataFrame()
+    # # add original network
+    # raw_value_df = raw_value_df.append(pd.Series(gene_counts_original, name="original"))
+
+    # difference_df = pd.DataFrame()
+
+    # make a dataframe for each output gene
+    output_dfs = {gene: pd.DataFrame() for gene in output_genes}
+
+    ## add original
+    for output_gene in output_genes:
+        output_dfs[output_gene] = output_dfs[output_gene].append(pd.Series(gene_counts_original[output_gene], name="original"))
 
 
+    for n_genes in range(1, len(core_of_the_core)+1):
+
+        for core_genes in itertools.combinations(core_of_the_core, n_genes):
+
+            print ("turning off", core_genes)
+
+            modified_network = PyBoolNet.PrimeImplicants.\
+                create_constants(cancer_network, 
+                {core_gene: 0 for core_gene in core_genes}, 
+                Copy=True)
+            print ("constants are", PyBoolNet.\
+                    PrimeImplicants.find_constants(modified_network))
+
+            attractors, _ = build_STG_and_determine_attractors(modified_network, states)
+
+            # print ("found", len(set(map(frozenset, attractors))), 
+            #     "unique attractors")
+
+            gene_counts_modified = compute_average_activation(modified_network, 
+                genes=output_genes,
+                attractors=attractors)
+
+            # for k, v in gene_counts_modified.items():
+            #     print ("{}\t{}".format(k, v))
+
+            # print ()
+
+            # raw_value_df = raw_value_df.append(pd.Series(gene_counts_modified, name="_".join(core_genes)))
+
+            # gene_counts_difference = {gene: gene_counts_modified[gene] - gene_counts_original[gene] for gene in gene_counts_modified}
+
+            # difference_df = difference_df.append(pd.Series(gene_counts_difference, name="_".join(core_genes)))
+            for output_gene in output_genes:
+                output_dfs[output_gene] = output_dfs[output_gene].append(pd.Series(gene_counts_modified[output_gene], name="_".join(core_genes)))
+
+    # raw_value_df.to_csv("raw_values.csv")
+    # difference_df.to_csv("differences.csv")
+
+    # print ("plotting raw values")
+    # plot_results_df(raw_value_df, "raw_values.png")
+
+    # print ("plotting differences")
+    # plot_results_df(difference_df, "differences.png")
+
+    
+    for n_genes in [1]:
+
+        for non_core_genes in itertools.combinations(potential_targets, n_genes):
+
+            print ("turning off", non_core_genes)
+
+            modified_network = PyBoolNet.PrimeImplicants.\
+                create_constants(cancer_network, 
+                {non_core_gene: 0 for non_core_gene in non_core_genes}, 
+                Copy=True)
+            print ("constants are", PyBoolNet.\
+                    PrimeImplicants.find_constants(modified_network))
+
+            attractors, _ = build_STG_and_determine_attractors(modified_network, states)
+
+            # print ("found", len(set(map(frozenset, attractors))), 
+            #     "unique attractors")
+
+            gene_counts_modified = compute_average_activation(modified_network, 
+                genes=output_genes,
+                attractors=attractors)
+
+            # for k, v in gene_counts_modified.items():
+            #     print ("{}\t{}".format(k, v))
+
+            # print ()
+
+            # raw_value_df = raw_value_df.append(pd.Series(gene_counts_modified, name="_".join(core_genes)))
+
+            # gene_counts_difference = {gene: gene_counts_modified[gene] - gene_counts_original[gene] for gene in gene_counts_modified}
+
+            # difference_df = difference_df.append(pd.Series(gene_counts_difference, name="_".join(core_genes)))
+            for output_gene in output_genes:
+                output_dfs[output_gene] = output_dfs[output_gene].append(pd.Series(gene_counts_modified[output_gene], name="_".join(non_core_genes)))
+
+    for output_gene in output_genes:
+        output_dfs[output_gene].to_csv(os.path.join("results", "{}_expressions_with_ras.csv".format(output_gene)))
+    
 
 
 if __name__ == "__main__":

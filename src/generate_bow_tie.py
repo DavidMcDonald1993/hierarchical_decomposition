@@ -205,7 +205,8 @@ def parse_args():
         help="Number of nodes with no outgoing edges.")
 
     parser.add_argument("--root_directory", 
-        dest="root_directory", type=str, default="synthetic_bow_tie_networks",
+        dest="root_directory", type=str, 
+        default="datasets/synthetic_bow_tie_networks",
         help="Directory to save networks.")
 
     parser.add_argument("--seed", 
