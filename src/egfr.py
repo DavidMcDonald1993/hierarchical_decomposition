@@ -116,7 +116,6 @@ def plot_results_df(df, filename):
 
     plt.show()
 
-
 def main():
 
     update = "synchronous"
@@ -124,6 +123,7 @@ def main():
     # primes = PyBoolNet.FileExchange.bnet2primes("datasets/EGFR_full/egfr.bnet", 
         # FnamePRIMES="datasets/EGFR_full/egfr_primes.json")
     primes = PyBoolNet.FileExchange.read_primes("datasets/EGFR_full/egfr_primes.json")
+
 
     core_of_the_core = set(["pi3k", "pip3", "gab1"])
 
@@ -138,13 +138,6 @@ def main():
     for gene in output_genes:
         assert gene in primes, gene
 
-    potential_targets = set(primes) - input_genes - output_genes - core_of_the_core - {"erbb1", "ras"}
-
-    cancer_network =  PyBoolNet.PrimeImplicants.\
-        create_constants(primes, 
-        {"erbb1": 1, "ras": 1}, 
-        Copy=True)
-
     num_state_samples = 10000
 
     print ("state space is too large -- sampling", 
@@ -152,21 +145,50 @@ def main():
             "states")
     states = set()
     while len(states) < num_state_samples:
-        state = tuple(np.random.randint(2, size=len(cancer_network)))
+        state = tuple(np.random.randint(2, size=len(primes)))
         states.add(state)
     states = list(map(lambda state: 
-        STGs.state2str({p: s for p, s in zip(cancer_network, state)}), states))
+        STGs.state2str({p: s for p, s in zip(primes, state)}), states))
 
     print ("completed sampling states -- determining attractors")
 
-    attractors, _ = build_STG_and_determine_attractors(cancer_network, states)
+    attractors, _ = build_STG_and_determine_attractors(primes, states)
     
     print ("ORIGINAL NETWORK")
 
     print ("found", len(set(map(frozenset, attractors))), 
         "unique attractors")
 
-    gene_counts_original = compute_average_activation(cancer_network, 
+    gene_counts_original = compute_average_activation(primes, 
+        genes=output_genes,
+        attractors=attractors)
+
+    # make a dataframe for each output gene
+    output_dfs = {gene: pd.DataFrame() for gene in output_genes}
+
+    ## add original
+    for output_gene in output_genes:
+        output_dfs[output_gene] = output_dfs[output_gene].append(pd.Series(gene_counts_original[output_gene], name="original"))
+
+
+
+  
+
+
+    cancer_network =  PyBoolNet.PrimeImplicants.\
+        create_constants(primes, 
+        {"erbb1": 1,}, 
+        Copy=True)
+
+
+    attractors, _ = build_STG_and_determine_attractors(cancer_network, states)
+    
+    print ("CANCER NETWORK")
+
+    print ("found", len(set(map(frozenset, attractors))), 
+        "unique attractors")
+
+    gene_counts_cancer = compute_average_activation(cancer_network, 
         genes=output_genes,
         attractors=attractors)
 
@@ -187,11 +209,11 @@ def main():
     # difference_df = pd.DataFrame()
 
     # make a dataframe for each output gene
-    output_dfs = {gene: pd.DataFrame() for gene in output_genes}
+    # output_dfs = {gene: pd.DataFrame() for gene in output_genes}
 
-    ## add original
+    ## add cancer
     for output_gene in output_genes:
-        output_dfs[output_gene] = output_dfs[output_gene].append(pd.Series(gene_counts_original[output_gene], name="original"))
+        output_dfs[output_gene] = output_dfs[output_gene].append(pd.Series(gene_counts_cancer[output_gene], name="cancer"))
 
 
     for n_genes in range(1, len(core_of_the_core)+1):
@@ -238,6 +260,9 @@ def main():
     # print ("plotting differences")
     # plot_results_df(difference_df, "differences.png")
 
+    potential_targets = set(primes) - input_genes - output_genes - core_of_the_core - {"erbb1", }
+
+
     
     for n_genes in [1]:
 
@@ -275,7 +300,7 @@ def main():
                 output_dfs[output_gene] = output_dfs[output_gene].append(pd.Series(gene_counts_modified[output_gene], name="_".join(non_core_genes)))
 
     for output_gene in output_genes:
-        output_dfs[output_gene].to_csv(os.path.join("results", "{}_expressions_with_ras.csv".format(output_gene)))
+        output_dfs[output_gene].to_csv(os.path.join("results", "{}_expressions.csv".format(output_gene)))
     
 
 

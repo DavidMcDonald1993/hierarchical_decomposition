@@ -35,11 +35,11 @@ def score_subgraph_module(g, groups):
 	assert n < 4
 
 	# all internal edges of subgraph
-	k_in = len([(u, v) for u, v in subgraph.edges() 
+	k_in = len([(u, v) for u, v, w in subgraph.edges(data="weight") 
 		if u != v])
 
-	k_self = len([(u, v) for u, v in subgraph.edges() 
-		if u == v])
+	k_self = len([(u, v) for u, v, w in subgraph.edges(data="weight") 
+		if u == v and w>0])
 
 	k_all = sum((len(list(g.neighbors(u))) for u in subgraph))
 
@@ -61,6 +61,28 @@ def score_subgraph_density(g, groups):
 
 	k_self = len([(u, v) for u, v in subgraph.edges() 
 		if u == v])
+
+	return  (k_in + k_self) / n ** 2
+
+def score_subgraph_density_positive(g, groups):
+	
+	'''
+	score a subgraph of g given by groups
+	'''
+
+	subgraph = g.subgraph(groups)
+	n = len(subgraph)
+	assert n < 4
+
+	# all internal edges of subgraph
+	k_in = len([(u, v) 
+		for u, v, w in subgraph.edges(data="weight") 
+		if u != v and w > 0])
+
+	k_self = len([(u, v) 
+		for u, v, w in subgraph.edges(data="weight") 
+		if u == v and w > 0])
+
 
 	return  (k_in + k_self) / n ** 2
 
@@ -157,14 +179,14 @@ def bottom_up_partition(g,
 			g.add_node(chosen_subgraph)
 			for n in chosen_subgraph:
 
-				for u, _ in g.in_edges(n):
+				for u, _, w in g.in_edges(n, data="weight"):
 					# if u == chosen_subgraph:
 					# 	continue
-					g.add_edge(u, chosen_subgraph)
-				for _, v in g.out_edges(n):
+					g.add_edge(u, chosen_subgraph, weight=w)
+				for _, v, w in g.out_edges(n, data="weight"):
 					# if v == chosen_subgraph:
 					# 	continue
-					g.add_edge(chosen_subgraph, v)
+					g.add_edge(chosen_subgraph, v, weight=w)
 				g.remove_node(n)
 
 			# add chosen subgraph to h
@@ -236,8 +258,8 @@ def parse_args():
 		help="Directory to save images/merge depths.")
 	parser.add_argument("--score-function",
 		dest="score_function", 
-		type=str, default="density", 
-		choices=["density", "module", "num_loops"],
+		type=str, default="density_pos", 
+		choices=["density", "density_pos", "module", "num_loops"],
 		help="Scoring function.")
 	parser.add_argument("--draw", action="store_true",
 		help="Flag to specify to plot or not.")
@@ -281,6 +303,8 @@ def main():
 
 	if score_function ==  "density":
 		score_function = score_subgraph_density
+	elif score_function == "density_pos":
+		score_function = score_subgraph_density_positive
 	elif score_function == "module":
 		score_function = score_subgraph_module
 	else:
