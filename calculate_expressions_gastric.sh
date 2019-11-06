@@ -4,7 +4,7 @@
 #SBATCH --output=expressionsGastric_%A_%a.out
 #SBATCH --error=expressionsGastric_%A_%a.err
 #SBATCH --array=0-2145
-#SBATCH --time=01:00:00
+#SBATCH --time=05:00:00
 #SBATCH --ntasks=1
 #SBATCH --mem=5G
 
