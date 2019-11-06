@@ -2,3 +2,6 @@ jupyter_notebooks
 results
 images
 *.csv
+datasets/padala
+datasets/synthetic_bow_tie_networks
+
