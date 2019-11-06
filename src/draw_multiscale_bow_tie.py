@@ -187,6 +187,9 @@ def main():
 		assert gene in g
 
 	output_dir = args.output
+	if not os.path.exists(output_dir):
+		print ("making directory", output_dir)
+		os.makedirs(output_dir, exist_ok=True)
 
 	nodes = core_of_core
 

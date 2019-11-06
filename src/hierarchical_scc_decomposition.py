@@ -32,18 +32,38 @@ def find_cycles(u, n, g, start, l=set()):
 def score_subgraph_module(g, groups):
 	subgraph = g.subgraph(groups)
 	n = len(subgraph)
-	assert n < 4
+	# assert n < 4
 
 	# all internal edges of subgraph
-	k_in = len([(u, v) for u, v, w in subgraph.edges(data="weight") 
+	k_in = len([(u, v) 
+		for u, v, w in subgraph.edges(data="weight") 
 		if u != v])
 
-	k_self = len([(u, v) for u, v, w in subgraph.edges(data="weight") 
-		if u == v and w>0])
+	# k_self = len([(u, v) for 
+	# 	u, v, w in subgraph.edges(data="weight") 
+	# 	if u == v])
 
 	k_all = sum((len(list(g.neighbors(u))) for u in subgraph))
 
-	return (k_in + k_self) / k_all
+	return (k_in + 0) / k_all
+
+def score_subgraph_module_positive(g, groups):
+	subgraph = g.subgraph(groups)
+	n = len(subgraph)
+	# assert n < 4
+
+	# all internal edges of subgraph
+	k_in = len([(u, v) 
+		for u, v, w in subgraph.edges(data="weight") 
+		if u != v and w > 0])
+
+	# k_self = len([(u, v) 
+	# 	for u, v, w in subgraph.edges(data="weight") 
+	# 	if u == v and w>0])
+
+	k_all = sum((len(list(g.neighbors(u))) for u in subgraph))
+
+	return (k_in + 0) / k_all
 
 def score_subgraph_density(g, groups):
 	
@@ -53,13 +73,15 @@ def score_subgraph_density(g, groups):
 
 	subgraph = g.subgraph(groups)
 	n = len(subgraph)
-	assert n < 4
+	# assert n < 4
 
 	# all internal edges of subgraph
-	k_in = len([(u, v) for u, v in subgraph.edges() 
+	k_in = len([(u, v) 
+		for u, v in subgraph.edges() 
 		if u != v])
 
-	k_self = len([(u, v) for u, v in subgraph.edges() 
+	k_self = len([(u, v) 
+		for u, v in subgraph.edges() 
 		if u == v])
 
 	return  (k_in + k_self) / n ** 2
@@ -72,7 +94,7 @@ def score_subgraph_density_positive(g, groups):
 
 	subgraph = g.subgraph(groups)
 	n = len(subgraph)
-	assert n < 4
+	# assert n < 4
 
 	# all internal edges of subgraph
 	k_in = len([(u, v) 
@@ -83,13 +105,12 @@ def score_subgraph_density_positive(g, groups):
 		for u, v, w in subgraph.edges(data="weight") 
 		if u == v and w > 0])
 
-
 	return  (k_in + k_self) / n ** 2
 
 def score_subgraph_num_loops(g, groups):
 	subgraph = g.subgraph(groups)
 	n = len(subgraph)
-	assert n < 4
+	# assert n < 4
 	d = (1 if n==1
 		else 3 if n == 2
 		else 8)
@@ -97,22 +118,21 @@ def score_subgraph_num_loops(g, groups):
 
 def bottom_up_partition(g, 
 	score_function=score_subgraph_density,
-	subgraph_sizes=[2, 3]):
+	subgraph_sizes=(2, 3)):
 
 	'''
 	perform partition in bottom-up manner
 	'''
 
-	g = g.copy()
+	g = nx.MultiDiGraph(g.copy())
 	
 	h = nx.DiGraph()
 
 	h.add_nodes_from( g.nodes() )
 
-	## handle self loops
+	# ## handle self loops
 	for u, _ in nx.selfloop_edges(g):
 		h.add_edge(u, frozenset([u]))
-
 	g = nx.relabel_nodes(g, 
 		mapping={n: frozenset([n]) 
 		for n, _ in nx.selfloop_edges(g)})
@@ -138,13 +158,14 @@ def bottom_up_partition(g,
 
 		if len(subgraph_scores) > 0:
 
-			# determine all highest subgraphs
+			# determine all highest scoring subgraphs
 
 			sorted_subgraphs = sorted(subgraph_scores, 
 				key=lambda x: subgraph_scores[x],#(subgraph_scores[x], len(x)),
 				reverse=True)
 			chosen_subgraph = sorted_subgraphs.pop(0)
 			chosen_subgraph_score = subgraph_scores[chosen_subgraph]
+			assert chosen_subgraph_score > 0
 			chosen_subgraphs = [chosen_subgraph]
 
 			for subgraph in sorted_subgraphs:
@@ -165,7 +186,7 @@ def bottom_up_partition(g,
 					for cc in nx.connected_components(overlap_g)]
 		else:
 			# could not find a subgraph of selected sizes
-			print ("no subgraphs of size", subgraph_sizes)
+			print ("no subgraphs of sizes", subgraph_sizes)
 			chosen_subgraphs = [frozenset().union([x for x in g])]
 
 		for chosen_subgraph in chosen_subgraphs:
@@ -179,14 +200,22 @@ def bottom_up_partition(g,
 			g.add_node(chosen_subgraph)
 			for n in chosen_subgraph:
 
-				for u, _, w in g.in_edges(n, data="weight"):
-					# if u == chosen_subgraph:
-					# 	continue
-					g.add_edge(u, chosen_subgraph, weight=w)
-				for _, v, w in g.out_edges(n, data="weight"):
-					# if v == chosen_subgraph:
-					# 	continue
-					g.add_edge(chosen_subgraph, v, weight=w)
+				if isinstance(g, nx.DiGraph):
+					for u, _, w in g.in_edges(n, data="weight"):
+						# if u == chosen_subgraph:
+						# 	continue
+						g.add_edge(u, chosen_subgraph, weight=w)
+					for _, v, w in g.out_edges(n, data="weight"):
+						# if v == chosen_subgraph:
+						# 	continue
+						g.add_edge(chosen_subgraph, v, weight=w)
+				else:
+					assert False
+					for _, v, w in g.edges(n, data="weight"):
+						if v == chosen_subgraph:
+							continue
+						g.add_edge(chosen_subgraph, v, weight=w)
+
 				g.remove_node(n)
 
 			# add chosen subgraph to h
@@ -207,10 +236,9 @@ def bottom_up_partition(g,
 
 	return h
 
-
 def decompose_all_sccs(g, 
 	score_function=score_subgraph_density,
-	subgraph_sizes=[2, 3]):
+	subgraph_sizes=(2, 3)):
 	'''
 	run decomposition on each SCC in g
 	'''
@@ -259,7 +287,9 @@ def parse_args():
 	parser.add_argument("--score-function",
 		dest="score_function", 
 		type=str, default="density_pos", 
-		choices=["density", "density_pos", "module", "num_loops"],
+		choices=["density", "density_pos", 
+			"module", "module_pos",
+			"num_loops"],
 		help="Scoring function.")
 	parser.add_argument("--draw", action="store_true",
 		help="Flag to specify to plot or not.")
@@ -307,6 +337,8 @@ def main():
 		score_function = score_subgraph_density_positive
 	elif score_function == "module":
 		score_function = score_subgraph_module
+	elif score_function == "module_pos":
+		score_function = score_subgraph_module_positive
 	else:
 		score_function = score_subgraph_num_loops
 
@@ -384,9 +416,7 @@ def main():
 		a.draw(tree_plot_filename)
 
 		print ("plotted", tree_plot_filename)
-
 	
-
 
 	print ("determining merge depths")
 
@@ -412,42 +442,42 @@ def main():
 
 
 	# plot core-of-the-core with neighbours:
-	if args.draw:
+	# if args.draw:
 
-		print ("plotting core-of-the-core with immediate neighbours")
-		g_undirected = g.to_undirected()
+	# 	print ("plotting core-of-the-core with immediate neighbours")
+	# 	g_undirected = g.to_undirected()
 		
-		core_of_the_core = set(genes_with_max_merge_depth)
-		core_neighbours = set().union(*(g_undirected.neighbors(n) for n in core_of_the_core))
+	# 	core_of_the_core = set(genes_with_max_merge_depth)
+	# 	core_neighbours = set().union(*(g_undirected.neighbors(n) for n in core_of_the_core))
 
-		# draw core of the core
-		core_of_the_core_subgraph = nx.DiGraph(g.subgraph(core_of_the_core))
+	# 	# draw core of the core
+	# 	core_of_the_core_subgraph = nx.DiGraph(g.subgraph(core_of_the_core))
 
-		core_plot_filename = os.path.join(output_dir, 
-			"core_of_core.png")
-		core_of_the_core_subgraph.graph['edge'] = {'arrowsize': '.8', 'splines': 'curved'}
-		core_of_the_core_subgraph.graph['graph'] = {'scale': '3'}
+	# 	core_plot_filename = os.path.join(output_dir, 
+	# 		"core_of_core.png")
+	# 	core_of_the_core_subgraph.graph['edge'] = {'arrowsize': '.8', 'splines': 'curved'}
+	# 	core_of_the_core_subgraph.graph['graph'] = {'scale': '3'}
 
-		a = to_agraph(core_of_the_core_subgraph)
-		a.layout('dot')   
-		a.draw(core_plot_filename)
+	# 	a = to_agraph(core_of_the_core_subgraph)
+	# 	a.layout('dot')   
+	# 	a.draw(core_plot_filename)
 
-		neighbours_subgraph = nx.DiGraph(g.subgraph(core_of_the_core.union(core_neighbours)))
+	# 	neighbours_subgraph = nx.DiGraph(g.subgraph(core_of_the_core.union(core_neighbours)))
 
-		core_neighbour_plot_filename = os.path.join(output_dir, 
-			"core_neighbours.png")
-		neighbours_subgraph.graph['edge'] = {'arrowsize': '.8', 'splines': 'curved'}
-		neighbours_subgraph.graph['graph'] = {'scale': '3'}
+	# 	core_neighbour_plot_filename = os.path.join(output_dir, 
+	# 		"core_neighbours.png")
+	# 	neighbours_subgraph.graph['edge'] = {'arrowsize': '.8', 'splines': 'curved'}
+	# 	neighbours_subgraph.graph['graph'] = {'scale': '3'}
 
-		a = to_agraph(neighbours_subgraph)
+	# 	a = to_agraph(neighbours_subgraph)
 
-		a.add_subgraph(core_of_the_core, 
-			name="cluster_core_of_the_core")
+	# 	a.add_subgraph(core_of_the_core, 
+	# 		name="cluster_core_of_the_core")
 
-		a.layout('dot')   
-		a.draw(core_neighbour_plot_filename)
+	# 	a.layout('dot')   
+	# 	a.draw(core_neighbour_plot_filename)
 
-		print ("plotted", core_neighbour_plot_filename)
+	# 	print ("plotted", core_neighbour_plot_filename)
 
 	# target input genes
 	core = list(max(nx.strongly_connected_component_subgraphs(g),
