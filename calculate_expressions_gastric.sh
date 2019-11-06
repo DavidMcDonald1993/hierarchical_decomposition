@@ -8,10 +8,10 @@
 #SBATCH --ntasks=1
 #SBATCH --mem=5G
 
-# module purge
-# module load bluebear
-# module load bear-apps/2019a
-# module load Python/3.7.2-GCCcore-8.2.0
+module purge
+module load bluebear
+module load bear-apps/2019a
+module load Python/3.7.2-GCCcore-8.2.0
 
 pip install --user numpy networkx pandas PyBoolNet
 
