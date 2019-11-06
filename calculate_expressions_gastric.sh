@@ -21,5 +21,4 @@ args=$(echo "--edgelist datasets/gastric/edgelist.tsv
 --output_genes Caspase8 Caspase9 FOXO RSK TCF cMYC")
 
 touch results/gastric/{Caspase8,Caspase9,FOXO,RSK,TCF,cMYC}_expressions.lock
-
 python src/calculate_expressions.py $args -i ${SLURM_ARRAY_TASK_ID}
