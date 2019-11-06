@@ -21,4 +21,5 @@ args=$(echo "--edgelist datasets/EGFR_full/edgelist_with_genes.tsv
 --cancer_mutation erbb11 
 --output_genes elk1 creb ap1 cmyc p70s6_2 hsp27 pro_apoptotic")
 
+touch results/EGFR/erbb11/{elk1,creb,ap1,cmyc,p70s6_2,hsp27,pro_apoptotic}_expressions.lock
 python src/calculate_expressions.py $args -i ${SLURM_ARRAY_TASK_ID}
