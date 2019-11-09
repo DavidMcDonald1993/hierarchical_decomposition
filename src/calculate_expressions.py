@@ -66,7 +66,8 @@ def main():
     edgelist_filename = args.edgelist
     print ("loading interaction graph from", edgelist_filename)
     g = nx.read_weighted_edgelist(edgelist_filename, 
-        delimiter="\t", create_using=nx.DiGraph())
+        delimiter="\t",
+        create_using=nx.DiGraph())
 
     core = max(nx.strongly_connected_components(g), 
         key=len)
@@ -174,10 +175,11 @@ def main():
             modified_network = primes
 
         print ("determining attractors")
-        attractors = build_STG_and_determine_attractors(primes, states)
+        attractors = build_STG_and_determine_attractors(modified_network, 
+            states)
         
         print ("determing activations for output genes")
-        gene_counts = compute_average_activation(primes, 
+        gene_counts = compute_average_activation(modified_network, 
             genes=output_genes,
             attractors=attractors)
 
@@ -186,11 +188,6 @@ def main():
         # print ("writing results to file")
 
         for output_gene in output_genes:
-            # threadsafe_save_test_results(lock_filenames[output_gene], 
-            # output_filenames[output_gene],
-            # chosen_candidate_identifier,
-            # gene_counts[output_gene]
-            # )
             output_dfs[output_gene] = output_dfs[output_gene]\
                 .append(pd.Series(gene_counts[output_gene], name=chosen_candidate_identifier))
 
