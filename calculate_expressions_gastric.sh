@@ -3,7 +3,7 @@
 #SBATCH --job-name=expressionsGastric
 #SBATCH --output=expressionsGastric_%A_%a.out
 #SBATCH --error=expressionsGastric_%A_%a.err
-#SBATCH --array=0-215
+#SBATCH --array=0-190
 #SBATCH --time=05:00:00
 #SBATCH --ntasks=1
 #SBATCH --mem=5G

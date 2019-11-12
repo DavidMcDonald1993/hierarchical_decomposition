@@ -64,15 +64,14 @@ def main():
 
     output_genes = args.output_genes
 
-    for gene in output_genes:
-        assert gene in g, gene
-
-
     edgelist_filename = args.edgelist
     print ("loading interaction graph from", edgelist_filename)
     g = nx.read_weighted_edgelist(edgelist_filename, 
         delimiter="\t",
         create_using=nx.DiGraph())
+    
+    for gene in output_genes:
+        assert gene in g, gene
 
     core = max(nx.strongly_connected_components(g), 
         key=len)
