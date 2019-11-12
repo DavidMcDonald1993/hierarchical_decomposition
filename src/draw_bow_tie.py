@@ -58,15 +58,15 @@ def main():
 	if not os.path.exists(output_dir):
 		os.mkdir(output_dir)
 
-	# draw whole network
-	plot_filename = os.path.join(output_dir,
-		"whole_network.png")
-	g.graph['edge'] = {'arrowsize': '.8', 'splines': 'curved'}
-	g.graph['graph'] = {'scale': '3'}
+	# # draw whole network
+	# plot_filename = os.path.join(output_dir,
+	# 	"whole_network.png")
+	# g.graph['edge'] = {'arrowsize': '.8', 'splines': 'curved'}
+	# g.graph['graph'] = {'scale': '3'}
 
-	a = to_agraph(g)
-	a.layout('dot')   
-	a.draw(plot_filename)
+	# a = to_agraph(g)
+	# a.layout('dot')   
+	# a.draw(plot_filename)
 
 	# draw whole network in bow-tie form 
 	h = g.copy()

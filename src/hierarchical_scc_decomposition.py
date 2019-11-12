@@ -39,13 +39,14 @@ def score_subgraph_module(g, groups):
 		for u, v, w in subgraph.edges(data="weight") 
 		if u != v])
 
-	# k_self = len([(u, v) for 
-	# 	u, v, w in subgraph.edges(data="weight") 
-	# 	if u == v])
+	k_self = len([(u, v) for 
+		u, v, w in subgraph.edges(data="weight") 
+		if u == v])
+	k_self = 0
 
 	k_all = sum((len(list(g.neighbors(u))) for u in subgraph))
 
-	return (k_in + 0) / k_all
+	return (k_in + k_self) / k_all
 
 def score_subgraph_module_positive(g, groups):
 	subgraph = g.subgraph(groups)
@@ -57,13 +58,14 @@ def score_subgraph_module_positive(g, groups):
 		for u, v, w in subgraph.edges(data="weight") 
 		if u != v and w > 0])
 
-	# k_self = len([(u, v) 
-	# 	for u, v, w in subgraph.edges(data="weight") 
-	# 	if u == v and w>0])
+	k_self = len([(u, v) 
+		for u, v, w in subgraph.edges(data="weight") 
+		if u == v and w>0])
+	k_self = 0
 
 	k_all = sum((len(list(g.neighbors(u))) for u in subgraph))
 
-	return (k_in + 0) / k_all
+	return (k_in + k_self) / k_all
 
 def score_subgraph_density(g, groups):
 	
