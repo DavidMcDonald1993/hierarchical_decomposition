@@ -4,4 +4,6 @@ images
 *.csv
 datasets/padala
 datasets/synthetic_bow_tie_networks
+output
+
 

@@ -44,10 +44,10 @@ def load_dfs(df_directory):
             dfs[output_gene] = pd.read_csv(full_df, index_col=0)
             print ("read", _file)
 
-    # remove any mutations caused by output genes
-    regex = "|".join(dfs.keys())
-    for output_gene, df in dfs.items():
-        dfs[output_gene] = df.loc[~df.index.str.contains(regex)]
+    # # remove any mutations caused by output genes
+    # regex = "|".join(dfs.keys())
+    # for output_gene, df in dfs.items():
+    #     dfs[output_gene] = df.loc[~df.index.str.contains(regex)]
 
     return dfs
 
