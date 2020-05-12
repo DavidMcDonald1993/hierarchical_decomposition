@@ -98,7 +98,8 @@ def build_network_structure(num_in=2,
     return graph
 
 
-def build_rules(graph,
+def build_rules(
+    graph,
     and_p=.5):
 
     # nodes = set(graph)
@@ -239,7 +240,8 @@ def main():
 
     for seed in range(num_seeds):
 
-        output_directory = os.path.join(root_directory, "{:03d}".format(seed))
+        output_directory = os.path.join(root_directory, 
+            "{:03d}".format(seed))
         
         if not os.path.exists(output_directory):
             os.mkdir(output_directory)
@@ -275,11 +277,15 @@ def main():
         neet_logic_filename = os.path.join(output_directory, "network.txt")
         write_neet_logic(rules, neet_logic_filename)
 
-        net = LogicNetwork.read_logic(neet_logic_filename)
 
-        print ("read neet logic file:", neet_logic_filename)
-        avg_sensitivity = sensitivity.average_sensitivity(net)
-        print ("average sensitivity", avg_sensitivity)
+        # net = LogicNetwork.read_logic(neet_logic_filename)
+
+        # print ("read neet logic file:", neet_logic_filename)
+        # avg_sensitivity = sensitivity.average_sensitivity(net)
+        # print ("average sensitivity", avg_sensitivity)
+
+
+
 
         # print ("reading", bnet_filename)
         # primes = PyBoolNet.FileExchange.bnet2primes(bnet_filename)  
