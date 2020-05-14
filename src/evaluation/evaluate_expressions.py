@@ -4,12 +4,14 @@ import glob
 
 import numpy as np 
 import pandas as pd 
+import networkx as nx
 
 from scipy.stats import kruskal, mannwhitneyu, ttest_rel
 
 import argparse
 
 def load_dfs(df_directory):
+
 
     print ("loading data from directory", df_directory)
 
@@ -48,7 +50,12 @@ def load_dfs(df_directory):
 
 def evaluate_egfr(dfs, output_dir):
 
+
     print ("evaluating EGFR")
+
+    graph = nx.read_weighted_edgelist(
+        "datasets/EGFR_full/edgelist_with_genes.tsv", 
+        delimiter="\t", create_using=nx.DiGraph())
 
     p_value_df = pd.DataFrame()
 
@@ -65,6 +72,14 @@ def evaluate_egfr(dfs, output_dir):
         print ("number of target sets:", len(target_sets))
 
         for target_set in target_sets:
+
+            # if "+" in target_set:
+            subgraph = graph.subgraph(
+                target_set.split("+"))
+            if not nx.is_weakly_connected(subgraph):
+                print ("skipping", target_set)
+                continue
+
 
             print ("processing target set", target_set,
                 "for output", output_gene)
@@ -99,43 +114,72 @@ def evaluate_egfr(dfs, output_dir):
             target_set_p_values.update({target_set: p_value})
         
         p_value_df[output_gene] = pd.Series(target_set_p_values) 
-        
-      
-    rank_df = p_value_df.rank(axis=0, ascending=True, method="first")
+    
+
+    rank_df = p_value_df.rank(axis=0, 
+        ascending=True, method="min")
     mean_rank_df = rank_df.mean(axis=1) # mean over all outputs
     mean_rank_df = mean_rank_df.sort_values(ascending=True)
-
+    
     p_value_df_filename = os.path.join(output_dir, 
-        "p_values.csv")
+        "p_values_all_targets.csv")
     print ("writing p-values to", p_value_df_filename)
     p_value_df.to_csv(p_value_df_filename)
 
     rank_df_filename = os.path.join(output_dir, 
-        "rank_dataframe.csv")
+        "rank_dataframe_all_targets.csv")
     print ("writing ranks to", rank_df_filename)
     rank_df.to_csv(rank_df_filename)
 
     mean_rank_filename = os.path.join(output_dir,
-        "mean_ranks.csv")
+        "mean_ranks_all_targets.csv")
     print ("writing mean ranks to", mean_rank_filename)
     mean_rank_df.to_csv(mean_rank_filename)
 
-    
+    # split up by number of genes
+    splits = [s.split("+") for s in p_value_df.index]
 
+    for n_genes in (1, 2, 3):
+
+        idx = [len(s) == n_genes for s in splits]
+
+        p_value_df_n_genes = p_value_df.loc[idx]
+
+        rank_df_n_genes = p_value_df_n_genes.rank(
+            axis=0, ascending=True, method="min")
+        mean_rank_df_n_genes = rank_df_n_genes.mean(axis=1) # mean over all outputs
+        mean_rank_df_n_genes = mean_rank_df_n_genes.\
+            sort_values(ascending=True)
+
+        p_value_df_filename = os.path.join(output_dir, 
+            "p_values_{}_targets.csv".format(n_genes))
+        print ("writing p-values to", p_value_df_filename)
+        p_value_df_n_genes.to_csv(p_value_df_filename)
+
+        rank_df_filename = os.path.join(output_dir, 
+            "rank_dataframe_{}_targets.csv".format(n_genes))
+        print ("writing ranks to", rank_df_filename)
+        rank_df_n_genes.to_csv(rank_df_filename)
+
+        mean_rank_filename = os.path.join(output_dir,
+            "mean_ranks_{}_targets.csv".format(n_genes))
+        print ("writing mean ranks to", mean_rank_filename)
+        mean_rank_df_n_genes.to_csv(mean_rank_filename)
 
 
 def evaluate_gastric(dfs, output_dir):
 
     print ("evaluating gastric")
-
-    anti_survival = ["Caspase8", "Caspase9", "FOXO"]
+    
     pro_survival = ["RSK", "TCF", "cMYC"]
+    anti_survival = ["Caspase8", "Caspase9", "FOXO"]
 
     for gene in anti_survival + pro_survival:
         assert gene in dfs 
 
+    # mean across attractors
     print ("computing mean activation for each mutation")
-    activation_means = {output_gene: df.mean(1) # mean across attractors
+    activation_means = {output_gene: df.mean(1)
         for output_gene, df in dfs.items()}
 
     growth_scores = 0 # sum for all target_groups
@@ -145,18 +189,26 @@ def evaluate_gastric(dfs, output_dir):
         growth_scores -= activation_means[as_output]
 
     growth_scores = growth_scores.sort_values()
-
-
     growth_scores.to_csv(os.path.join(output_dir, 
-            "growth_scores.csv"))
+            "growth_scores_all_targets.csv"))
 
+    splits = [s.split("+") for s in growth_scores.index]
+
+    for n_genes in (1, 2, 3):
+
+        idx = [len(s) == n_genes for s in splits]
+        growth_scores_n_genes = growth_scores.loc[idx]
+
+        growth_scores_n_genes.to_csv(os.path.join(
+            output_dir, 
+            "growth_scores_{}_targets.csv".format(n_genes)))
 
 def parse_args():
     '''
     Parse from command line
     '''
     parser = argparse.ArgumentParser(
-        description="Evaluate mutated networks")
+        description="Evaluate targeted networks")
 
     parser.add_argument("-d", "--df_directory", 
         dest="df_directory", 

@@ -13,6 +13,9 @@ import matplotlib.pyplot as plt
 import glob
 
 def find_cycles(u, n, g, start, l=set()):   
+
+	if isinstance(g, nx.MultiDiGraph):
+		g = nx.DiGraph(g)
 	
 	if n==0:
 		assert u == start
@@ -25,14 +28,13 @@ def find_cycles(u, n, g, start, l=set()):
 		neighbors = set(g.neighbors(u)) . intersection({start})
 		
 	paths = ( [u] + cycle
-	for neighbor in neighbors
-	for cycle in find_cycles(neighbor, n-1, g, start, l_) )
+		for neighbor in neighbors
+		for cycle in find_cycles(neighbor, n-1, g, start, l_) )
 	return paths
 
 def score_subgraph_module(g, groups):
 	subgraph = g.subgraph(groups)
-	n = len(subgraph)
-	# assert n < 4
+	# n = len(subgraph)
 
 	# all internal edges of subgraph
 	k_in = len([(u, v) 
@@ -42,7 +44,6 @@ def score_subgraph_module(g, groups):
 	k_self = len([(u, v) for 
 		u, v, w in subgraph.edges(data="weight") 
 		if u == v])
-	k_self = 0
 
 	k_all = sum((len(list(g.neighbors(u))) for u in subgraph))
 
@@ -50,7 +51,7 @@ def score_subgraph_module(g, groups):
 
 def score_subgraph_module_positive(g, groups):
 	subgraph = g.subgraph(groups)
-	n = len(subgraph)
+	# n = len(subgraph)
 	# assert n < 4
 
 	# all internal edges of subgraph
@@ -75,7 +76,6 @@ def score_subgraph_density(g, groups):
 
 	subgraph = g.subgraph(groups)
 	n = len(subgraph)
-	# assert n < 4
 
 	# all internal edges of subgraph
 	k_in = len([(u, v) 
@@ -96,7 +96,6 @@ def score_subgraph_density_positive(g, groups):
 
 	subgraph = g.subgraph(groups)
 	n = len(subgraph)
-	# assert n < 4
 
 	# all internal edges of subgraph
 	k_in = len([(u, v) 
@@ -127,6 +126,7 @@ def bottom_up_partition(g,
 	'''
 
 	g = nx.MultiDiGraph(g.copy())
+	# g = nx.MultiGraph(g.copy())
 	
 	h = nx.DiGraph()
 
@@ -143,49 +143,64 @@ def bottom_up_partition(g,
 
 	i = 0
 	for s in subgraph_sizes:
+		print (s)
 		for n in g.nodes():
-			for cycle in map(frozenset, find_cycles(n, s, 
-				g, start=n)):
+			for cycle in map(frozenset, 
+				find_cycles(n, s, g, start=n)):
 				if cycle in subgraph_scores:
 					continue
 				subgraph_scores[cycle] = \
 					score_function(g, cycle)
-			print ("processed", i, "/", len(g) * len(subgraph_sizes))
+			print ("processed", i, "/", 
+				len(g) * len(subgraph_sizes))
 			i += 1
 
 	# repeat until g has collapsed into a single node    
 	while len(g) > 1:
 
-		print ("number of nodes in g:", len(g))
+		print ("number of nodes in g:", len(g), )
+
 
 		if len(subgraph_scores) > 0:
 
 			# determine all highest scoring subgraphs
-
 			sorted_subgraphs = sorted(subgraph_scores, 
 				key=lambda x: subgraph_scores[x],#(subgraph_scores[x], len(x)),
 				reverse=True)
 			chosen_subgraph = sorted_subgraphs.pop(0)
 			chosen_subgraph_score = subgraph_scores[chosen_subgraph]
-			assert chosen_subgraph_score > 0
-			chosen_subgraphs = [chosen_subgraph]
+			# assert chosen_subgraph_score > 0, chosen_subgraph_score
+			if chosen_subgraph_score > 0:
 
-			for subgraph in sorted_subgraphs:
-				if subgraph_scores[subgraph] < chosen_subgraph_score:
-					break
-				chosen_subgraphs.append(subgraph)
+				chosen_subgraphs = [chosen_subgraph]
 
-			# combine any chosen subgraphs that contain the 
-			# same nodes
-			if len(chosen_subgraphs) > 1:
+				for subgraph in sorted_subgraphs:
+					if subgraph_scores[subgraph] < chosen_subgraph_score:
+						break
+					chosen_subgraphs.append(subgraph)
 
-				overlaps = np.array([[len(x.intersection(y)) 
-					for y in chosen_subgraphs]
-					for x in chosen_subgraphs])
-				overlap_g = nx.Graph(overlaps)
-				chosen_subgraphs = [frozenset().union([x 
-					for c in cc for x in chosen_subgraphs[c]]) 
-					for cc in nx.connected_components(overlap_g)]
+				# combine any chosen subgraphs that contain the 
+				# same nodes
+				if len(chosen_subgraphs) > 1:
+
+					print ("number of chosen subgraphs before collapse", 
+						len(chosen_subgraphs))
+
+					overlaps = np.array([[len(x.intersection(y)) 
+						for y in chosen_subgraphs]
+						for x in chosen_subgraphs])
+					overlap_g = nx.Graph(overlaps)
+					chosen_subgraphs = [frozenset().union([x 
+						for c in cc for x in chosen_subgraphs[c]]) 
+						for cc in nx.connected_components(overlap_g)]
+
+					print ("number of chosen subgraphs after collapse", 
+						len(chosen_subgraphs))
+			else:
+				# could not find a subgraph with positive score
+				print ("no subgraphs with positive score", chosen_subgraph_score)
+				chosen_subgraphs = [frozenset().union([x for x in g])]
+
 		else:
 			# could not find a subgraph of selected sizes
 			print ("no subgraphs of sizes", subgraph_sizes)
@@ -194,30 +209,54 @@ def bottom_up_partition(g,
 		for chosen_subgraph in chosen_subgraphs:
 
 			# remove scores associated with merged nodes
+			print ("removing scores associated with", 
+				"chosen subgraph")
 			subgraph_scores = {k: v 
 				for k, v in subgraph_scores.items()
 				if not any([x in k for x in chosen_subgraph])}
+			print ("done")
 			
-			# merge subgraph into meta-node
+			# merge subgraph into super-node
 			g.add_node(chosen_subgraph)
+
 			for n in chosen_subgraph:
+
+				new_edges = []
 
 				if isinstance(g, nx.DiGraph):
 					for u, _, w in g.in_edges(n, data="weight"):
 						# if u == chosen_subgraph:
 						# 	continue
-						g.add_edge(u, chosen_subgraph, weight=w)
+						if u in chosen_subgraph:
+							u = chosen_subgraph
+						new_edges.append(
+							(u, chosen_subgraph, {"weight": w}))
+						# g.add_edge(u, chosen_subgraph, 
+							# weight=w)
 					for _, v, w in g.out_edges(n, data="weight"):
 						# if v == chosen_subgraph:
 						# 	continue
-						g.add_edge(chosen_subgraph, v, weight=w)
+						if v in chosen_subgraph:
+							v = chosen_subgraph
+						new_edges.append(
+							(chosen_subgraph, v, {"weight": w}))
+						# g.add_edge(chosen_subgraph, v,
+							# weight=w)
 				else:
-					assert False
+					
+					# undirected case
+					# assert False 
 					for _, v, w in g.edges(n, data="weight"):
-						if v == chosen_subgraph:
-							continue
-						g.add_edge(chosen_subgraph, v, weight=w)
+						# if v == chosen_subgraph:
+							# continue
+						if v in chosen_subgraph:
+							v = chosen_subgraph
+						new_edges.append(
+							(chosen_subgraph, v, {"weight": w}))
+						# g.add_edge(chosen_subgraph, v, 
+							# weight=w)
 
+				g.add_edges_from(new_edges)
 				g.remove_node(n)
 
 			# add chosen subgraph to h
@@ -226,15 +265,18 @@ def bottom_up_partition(g,
 				h.add_edge(n, chosen_subgraph)
 
 			# add cycles containing new node
+			print ("determining cycles containing new node")
 			for s in subgraph_sizes:
 				for cycle in map(frozenset, 
 				find_cycles(chosen_subgraph, s, 
-				g, start=chosen_subgraph)):
+					g, start=chosen_subgraph)):
 					# assert nx.is_strongly_connected(g.subgraph(cycle))
 					if cycle in subgraph_scores:
+						assert False
 						continue
 					subgraph_scores[cycle] = \
 						score_function(g, cycle)
+			print ("done")
 
 	return h
 

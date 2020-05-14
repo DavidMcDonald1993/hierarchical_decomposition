@@ -52,7 +52,7 @@ def parse_args():
 
 def main():
 
-    chunksize = 10
+    chunksize = 100
 
     args = parse_args()
 
@@ -78,16 +78,23 @@ def main():
 
     # remove any cancer genes from consideration
     cancer_mutuation = args.cancer_mutation
-    if cancer_mutuation:
+    if cancer_mutuation is not None:
         core = core - set(cancer_mutuation)
     core -= set(output_genes)
+
     core = sorted(core)
 
     print ("core is", core)
 
-    possible_candidates = [("cancer",)] + \
-        [genes for n_genes in [1, 2] 
-            for genes in itertools.combinations(core, n_genes)]
+    possible_candidates = [genes 
+        for n_genes in (1, 2, 3) 
+            for genes in itertools.combinations(core, 
+                n_genes)]
+
+    possible_candidates = list(filter(
+        lambda x: nx.is_weakly_connected(g.subgraph(x)),
+        possible_candidates
+    ))
 
     print ("number of possible candidates is", 
         len(possible_candidates))
@@ -95,7 +102,6 @@ def main():
     i = args.i
     chosen_candidates = possible_candidates[i*chunksize : 
         (i+1)*chunksize]
-
 
     output_filenames = {output_gene: 
         os.path.join(output_dir, 
@@ -134,7 +140,7 @@ def main():
     update = "synchronous"
 
     for chosen_candidate in chosen_candidates:
-        chosen_candidate_identifier = "_".join(chosen_candidate)
+        chosen_candidate_identifier = "+".join(chosen_candidate)
         print ("chosen candidate is", chosen_candidate_identifier)
 
 
@@ -165,7 +171,8 @@ def main():
 
         for output_gene in output_genes:
             output_dfs[output_gene] = output_dfs[output_gene]\
-                .append(pd.Series(gene_counts[output_gene], name=chosen_candidate_identifier))
+                .append(pd.Series(gene_counts[output_gene], 
+                name=chosen_candidate_identifier))
 
         print ()
 

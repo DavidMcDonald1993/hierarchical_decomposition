@@ -50,10 +50,10 @@ def build_STG_and_determine_attractors(primes, states):
 		stg.add_edge(state, next_state)
 
 
-		if state == next_state:
+		if state == next_state: # fixed point attractor
 			attractors.append([state])
 				
-		else:
+		else: # cyclic attractor
 
 			visited = [state]
 			while next_state not in visited:
