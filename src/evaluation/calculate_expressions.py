@@ -95,6 +95,7 @@ def main():
         lambda x: nx.is_weakly_connected(g.subgraph(x)),
         possible_candidates
     ))
+    possible_candidates = [("cancer",)] + possible_candidates
 
     print ("number of possible candidates is", 
         len(possible_candidates))
@@ -115,10 +116,11 @@ def main():
     primes_filename = args.primes
     if primes_filename.endswith(".bnet"):
         print ("loading from bnet file", primes_filename)
-        json_filename = primes_filename.replace(".bnet", ".json")
-        print("saving primes json to", json_filename)
+        # json_filename = primes_filename.replace(".bnet", ".json")
+        # print("saving primes json to", json_filename)
         primes = PyBoolNet.FileExchange.bnet2primes(primes_filename, 
-            FnamePRIMES=json_filename) # write to json
+            # FnamePRIMES=json_filename
+            ) # write to json
     else:
         assert primes_filename.endswith(".json")
         print ("loading primes from json", primes_filename)
@@ -129,7 +131,7 @@ def main():
             "to simulate cancer mutation")
         primes = PyBoolNet.PrimeImplicants.\
             create_constants(primes, 
-            {mutation: 1 for mutation in cancer_mutuation}, 
+            {mutation: 1 for mutation in cancer_mutuation}, # turn on cancer genes
             Copy=True)
 
     for gene in output_genes:
@@ -151,7 +153,7 @@ def main():
             
             modified_network = PyBoolNet.PrimeImplicants.\
                 create_constants(primes, 
-                {gene: 0 for gene in chosen_candidate}, 
+                {gene: 0 for gene in chosen_candidate}, # turn off targets 
                 Copy=True)
 
         else:
@@ -162,7 +164,7 @@ def main():
         attractors = build_STG_and_determine_attractors(
             modified_network, 
             states)
-        
+
         print ("determing activations for output genes")
         gene_counts = compute_average_activation(
             modified_network, 

@@ -78,7 +78,7 @@ def main():
 	a = to_agraph(h)
 
 	for i, scc in enumerate(filter(lambda x: len(x) > 1, 
-		nx.strongly_connected_component_subgraphs(h))):
+		nx.strongly_connected_components(h))):
 		a.add_subgraph(scc, 
 			name="cluster_{}".format(i)) 
 
@@ -89,8 +89,9 @@ def main():
 
 	# draw all SCCs to file (to use as images on nodes)
 	for i, g_ in enumerate(\
-		nx.strongly_connected_component_subgraphs(g)):
-				
+		nx.strongly_connected_components(g)):
+		g_ = g.subgraph(g_)
+
 		plot_filename = os.path.join(output_dir,
 			"scc_{}.png".format(i))
 		g_.graph['edge'] = {'arrowsize': '.8', 
@@ -110,7 +111,7 @@ def main():
 	map_ = {}
 	for i, scc in enumerate(nx.strongly_connected_components(g)):
 		if len(scc) == 1:
-			h.node[list(scc)[0]]["image"] = \
+			h.nodes[list(scc)[0]]["image"] = \
 				os.path.join(output_dir, 
 				"scc_{}.png".format(i))
 		else:

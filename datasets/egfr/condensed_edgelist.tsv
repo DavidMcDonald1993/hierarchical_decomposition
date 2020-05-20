@@ -1,0 +1,126 @@
+bad	pro_apoptotic	1.0
+gsk3	cmyc	-1.0
+tsc1_tsc2	rheb	-1.0
+ar	frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	1.0
+bir	erbb23	1.0
+bir	erbb24	1.0
+bir	erbb44	1.0
+bir	frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	1.0
+erbb23	frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	1.0
+erbb24	stat5	1.0
+erbb24	frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	1.0
+erbb44	frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	1.0
+btc	erbb23	1.0
+btc	erbb24	1.0
+btc	erbb44	1.0
+btc	frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	1.0
+ca	pkc	1.0
+cfos	ap1	1.0
+cjun	ap1	1.0
+csrc	stat1	1.0
+csrc	stat3	1.0
+csrc	stat5	1.0
+csrc	frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	1.0
+dag	pkc	1.0
+egf	erbb24	1.0
+egf	frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	1.0
+epr	erbb23	1.0
+epr	erbb24	1.0
+epr	frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	1.0
+eps8r	frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	1.0
+erbb1	frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	1.0
+plcg	dag	1.0
+plcg	ip3	1.0
+erbb2	erbb23	1.0
+erbb2	erbb24	1.0
+erbb2	erbb34	-1.0
+erbb2	frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	1.0
+erbb34	frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	1.0
+erbb3	erbb23	1.0
+erbb3	erbb34	1.0
+erbb3	frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	1.0
+erbb4	erbb24	1.0
+erbb4	erbb34	1.0
+erbb4	erbb44	1.0
+erbb4	frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	1.0
+nucerk12	cmyc	1.0
+nucerk12	elk1	1.0
+p70s6_1	p70s6_2	1.0
+hbegf	erbb24	1.0
+hbegf	frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	1.0
+ip3	ca	1.0
+jnk	cfos	1.0
+jnk	cjun	1.0
+jnk	p70s6_1	1.0
+limk1	actin_reorg	1.0
+mkk4	jnk	1.0
+mkk4	p38	1.0
+mkk7	jnk	1.0
+mekk4	mkk4	1.0
+mk2	creb	1.0
+mk2	hsp27	1.0
+mkk3	p38	1.0
+p38	mk2	1.0
+mkk6	p38	1.0
+mkp	nucerk12	-1.0
+mlk3	mkk3	1.0
+mlk3	mkk4	1.0
+mlk3	mkk6	1.0
+mtor_rap	p70s6_2	1.0
+mtor_ric	frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	1.0
+mtorr	mtor_rap	1.0
+mtorr	mtor_ric	1.0
+nrg1a	erbb23	1.0
+nrg1a	erbb24	1.0
+nrg1a	erbb34	1.0
+nrg1a	erbb44	1.0
+nrg1a	frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	1.0
+nrg1b	erbb23	1.0
+nrg1b	erbb24	1.0
+nrg1b	erbb34	1.0
+nrg1b	erbb44	1.0
+nrg1b	frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	1.0
+nrg2a	erbb24	1.0
+nrg2a	erbb34	1.0
+nrg2a	frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	1.0
+nrg2b	erbb23	1.0
+nrg2b	erbb24	1.0
+nrg2b	erbb34	1.0
+nrg2b	erbb44	1.0
+nrg2b	frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	1.0
+nrg3	erbb24	1.0
+nrg3	erbb44	1.0
+nrg4	erbb24	1.0
+nrg4	erbb44	1.0
+nrg4	frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	1.0
+pdk1	p70s6_2	1.0
+pdk1	pkc	1.0
+pdk1	frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	1.0
+pi3kr	frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	1.0
+pp2a	cfos	-1.0
+pp2a	frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	-1.0
+pp2b	elk1	-1.0
+pten	ptend	1.0
+ptend	frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	-1.0
+rheb	mtor_rap	1.0
+ship2	ship2d	1.0
+ship2d	frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	-1.0
+sos1r	frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	1.0
+tgfa	erbb24	1.0
+tgfa	frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	1.0
+frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	cfos	1.0
+frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	nucerk12	1.0
+frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	p70s6_1	1.0
+frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	bad	-1.0
+frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	limk1	1.0
+frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	mekk4	1.0
+frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	mlk3	1.0
+frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	mkk4	1.0
+frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	mkk7	1.0
+frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	plcg	1.0
+frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	stat1	1.0
+frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	stat3	1.0
+frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	stat5	1.0
+frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	gsk3	-1.0
+frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	tsc1_tsc2	-1.0
+frozenset({'erbb13', 'erk12', 'vav2', 'pak1', 'p90rskerk12d', 'sos1_eps8_e3b1', 'erbb14', 'shc', 'sos1', 'rac_cdc42', 'mekk1', 'shp1d', 'rasgap', 'erbb11', 'ras', 'shp2', 'endocyt_degrad', 'rin1', 'akt', 'mek12', 'grb2', 'gab1', 'rntre', 'shp1', 'p90rsk', 'aktd', 'rab5a', 'pi34p2', 'raf1', 'erbb12', 'nck', 'pi3k', 'pip3', 'ccbl'})	creb	1.0

@@ -2,6 +2,7 @@
 import os
 import fcntl
 import functools
+import itertools
 
 import numpy as np
 import networkx as nx 
@@ -11,15 +12,24 @@ from PyBoolNet import StateTransitionGraphs as STGs
 
 def select_states(primes, num_state_samples=10000, seed=0):
 
-	np.random.seed(seed)
+	n = len(primes)
 
-	print ("sampling", 
-			num_state_samples, 
-			"states")
-	states = set()
-	while len(states) < num_state_samples:
-		state = tuple(np.random.randint(2, size=len(primes)))
-		states.add(state)
+	if n <= 16:
+		print ("using entire state space")
+
+		states = set(itertools.product([0, 1], repeat=n))
+
+	else:
+
+		print ("sampling", 
+				num_state_samples, 
+				"states")
+		states = set()
+		np.random.seed(seed)
+
+		while len(states) < num_state_samples:
+			state = tuple(np.random.randint(2, size=n))
+			states.add(state)
 	states = list(map(lambda state: 
 		STGs.state2str({p: s 
 		for p, s in zip(primes, state)}), states))
@@ -59,7 +69,6 @@ def build_STG_and_determine_attractors(primes, states):
 			while next_state not in visited:
 				visited.append(next_state)
 				assert len(list(stg.neighbors(next_state))) == 1
-
 				next_state = list(stg.neighbors(next_state))[0]
 
 			idx = visited.index(next_state)

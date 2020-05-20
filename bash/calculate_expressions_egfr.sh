@@ -3,7 +3,7 @@
 #SBATCH --job-name=expressionsEGFR
 #SBATCH --output=expressionsEGFR_%A_%a.out
 #SBATCH --error=expressionsEGFR_%A_%a.err
-#SBATCH --array=0-61
+#SBATCH --array=0-21
 #SBATCH --time=05:00:00
 #SBATCH --ntasks=1
 #SBATCH --mem=1G
@@ -15,7 +15,7 @@ module load Python/3.7.2-GCCcore-8.2.0
 
 # pip install --user numpy networkx pandas PyBoolNet
 
-output_dir=results/EGFR/erbb11
+output_dir=results/EGFR/erbb11/OFF
 output_genes="elk1 creb ap1 cmyc p70s6_2 hsp27 pro_apoptotic"
 chunk_no=${SLURM_ARRAY_TASK_ID}
 
